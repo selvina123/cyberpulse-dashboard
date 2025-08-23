@@ -194,7 +194,6 @@ with st.sidebar:
     st.markdown("""
     <div style="position:fixed; bottom:40px; width:14rem; text-align:center; font-size:12px;
                 padding:8px; border-top:1px solid rgba(255,255,255,0.1); opacity:0.7;">
-        Trial period in 28 days <br><span style="color:#c77dff;">Upgrade Plan</span>
     </div>
     """, unsafe_allow_html=True)
 
