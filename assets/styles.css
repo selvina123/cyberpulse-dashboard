@@ -1,0 +1,54 @@
+
+/* Overall background */
+html, body, [class*="css"] {
+  background: radial-gradient(1200px 600px at 10% 10%, #2d0a2d 0%, #150015 50%, #0b0712 100%) !important;
+  color: #EAE6FF !important;
+}
+
+/* Sidebar brand */
+.brand {
+  font-weight: 800;
+  font-size: 22px;
+  padding: 8px 4px 0 4px;
+  background: linear-gradient(90deg,#c77dff,#7b2cbf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.side-sub { opacity: .6; margin-bottom: 14px; }
+
+/* Header */
+.header {
+  font-weight: 800;
+  font-size: 26px;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(124,44,191,.2), rgba(231,76,60,.12));
+  border: 1px solid rgba(255,255,255,.06);
+}
+.subheader { opacity:.75; margin: 6px 0 18px 4px; }
+
+/* KPI Cards */
+.kpi {
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(124,44,191,.18), rgba(20,12,40,.8));
+  border: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 12px 22px rgba(0,0,0,.35);
+}
+.kpi-label { font-size: 13px; opacity:.75 }
+.kpi-value { font-size: 30px; font-weight: 800; margin-top: 2px; }
+.kpi-sub { font-size: 12px; opacity:.6 }
+
+/* Tables & panels */
+.stDataFrame, .stTable, .stPlotlyChart {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.06);
+  box-shadow: 0 12px 22px rgba(0,0,0,.25);
+}
+.panel-title {
+  font-weight: 700;
+  margin: 10px 0 6px 2px;
+  opacity: .85;
+}
