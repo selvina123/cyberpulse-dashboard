@@ -10,21 +10,7 @@ import pandas as pd
 email = "Dear user, your account will be suspended unless you click this link."
 print(detect_phishing(email))
 
-from ml.anomaly import detect_anomalies
-
-# After you load or simulate events (df, logs, etc.)
-events = df.to_dict("records")
-anomaly_scores = detect_anomalies(events)
-df["anomaly_score"] = anomaly_scores
-
-from ids_threatintel import enrich_ip
-
-df["threat_score"] = df["src_ip"].apply(lambda ip: enrich_ip(ip)["score"])
-df["country"] = df["src_ip"].apply(lambda ip: enrich_ip(ip)["country"])
-
-
-
-st.set_page_config(page_title="Blue Team SOC Dashboard", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="CyberPulse Dashboard", page_icon="🛡️", layout="wide")
 
 # ---- Load CSS ----
 with open("assets/styles.css") as f:
@@ -216,6 +202,15 @@ if df.empty:
     st.warning("⚠️ No events to display. Try increasing demo duration or upload a different dataset.")
     st.stop()
 
+    from ml.anomaly import detect_anomalies
+
+# After you load or simulate events (df, logs, etc.)
+events = df.to_dict("records")
+if events:  # only run if df is not empty
+anomaly_scores = detect_anomalies(events)
+df["anomaly_score"] = anomaly_scores
+
+
 df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
 df = df.dropna(subset=["timestamp"]).sort_values("timestamp")
 df["hour"] = df["timestamp"].dt.hour
@@ -328,5 +323,17 @@ if st.button("Generate & Download CSV"):
     )
 
     st.success("✅ Risk Report generated!")
+
+    from ml.phishing import detect_phishing
+
+st.markdown("### ✉️ Phishing Detector")
+
+email_text = st.text_area("Paste email content here:")
+if st.button("Analyze Email"):
+    if email_text.strip():
+        result = detect_phishing(email_text)
+        st.write(f"**Prediction:** {result['label']} (score: {result['score']})")
+    else:
+        st.warning("Please paste some text first.")
 
 
