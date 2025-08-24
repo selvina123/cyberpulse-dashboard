@@ -177,13 +177,7 @@ with st.sidebar:
     if mode == "⬆️ Upload CSV":
         uploaded = st.file_uploader("Upload CSV", type=["csv"])
 
-    # Navigation menu
-    menu = st.radio(
-        "Navigation",
-        ["📊 Dashboard", "🔍 Discovery", "🛡️ API Security", "☁️ Cloud Infrastructure",
-         "📦 Inventory", "⚔️ Attack Paths", "🧩 Vulnerabilities", "✅ Compliance"],
-        index=0
-    )
+    
 
 # =================== Load Data ===================
 if mode == "🧪 Demo Data":
