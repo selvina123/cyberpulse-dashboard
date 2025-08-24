@@ -177,8 +177,6 @@ with st.sidebar:
     if mode == "⬆️ Upload CSV":
         uploaded = st.file_uploader("Upload CSV", type=["csv"])
 
-    
-
 # =================== Load Data ===================
 if mode == "🧪 Demo Data":
     df = generate_demo_data(minutes=minutes, step_seconds=step, seed=42)
@@ -224,7 +222,7 @@ with c5:
 # =================== Row 1: Heatmap + Map ===================
 colA, colB = st.columns((2, 1))
 with colA:
-    st.subheader("🔥 Event Activity Heatmap")
+    
     pivot_evt = (df.pivot_table(index="event_type", columns="hour", values="src_ip", aggfunc="count")
                    .fillna(0)
                    .reindex(index=["failed_login","successful_login","port_scan","suspicious_login"], fill_value=0))
@@ -239,7 +237,7 @@ with colA:
     st.plotly_chart(fig_evt, use_container_width=True, key="event_heatmap")
 
 with colB:
-    st.subheader("IP Risk Map")
+    
     risk_to_geo = {
         "High": (51.5, 0.1),   # London
         "Medium": (48.8, 2.3), # Paris
