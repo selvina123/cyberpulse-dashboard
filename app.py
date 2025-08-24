@@ -198,18 +198,74 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # =================== Toggle between variations ===================
-st.markdown("### 🔀 Dashboard Mode")
+st.markdown("### CyberPulse Dashboard")
 mode_button = st.radio(
     "Select Variation", 
     ["Scenario 1: Brute Force Heavy", "Scenario 2: Port Scan Heavy"], 
     index=0
 )
 
-# Generate different demo data based on toggle
+# Define event type weights based on scenario
 if mode_button == "Scenario 1: Brute Force Heavy":
-    df = generate_demo_data(minutes=180, step_seconds=30, seed=42)  # normal distribution
+    EVENT_TYPES = ["failed_login"]*6 + ["port_scan"]*2 + ["suspicious_login"]*1 + ["successful_login"]*1
 elif mode_button == "Scenario 2: Port Scan Heavy":
-    df = generate_demo_data(minutes=180, step_seconds=30, seed=99)  # different seed → different events
+    EVENT_TYPES = ["port_scan"]*6 + ["failed_login"]*2 + ["suspicious_login"]*1 + ["successful_login"]*1
+
+# =================== Data Generator ===================
+def generate_demo_data(minutes:int=180, step_seconds:int=30, seed:int=42) -> pd.DataFrame:
+    rng = np.random.default_rng(seed)
+    now = pd.Timestamp.utcnow().tz_localize(None)
+    start = now - pd.Timedelta(minutes=minutes)
+    timestamps = pd.date_range(start, now, freq=f"{step_seconds}s")
+
+    local_pool = [f"192.168.1.{i}" for i in range(10, 60, 2)]
+    public_pool = [f"203.0.113.{i}" for i in range(10, 50, 5)] + [f"198.51.100.{i}" for i in range(20, 60, 5)]
+    offenders = ["45.83.12.7", "77.21.56.99", "91.200.12.44", "185.220.100.1"]
+
+    users = ["alice", "bob", "charlie", "diana", "eve", "frank"]
+    servers = ["10.0.0.10", "10.0.0.20", "10.0.0.30"]
+
+    rows = []
+    for ts in timestamps:
+        num_events = rng.integers(0, 5)
+        for _ in range(num_events):
+            # 👇 pick event type from scenario-defined EVENT_TYPES
+            event_type = rng.choice(EVENT_TYPES)
+
+            src_ip = rng.choice(offenders + public_pool + local_pool)
+            dest_ip = rng.choice(servers)
+            dest_port = int(rng.choice([22,23,25,80,110,135,139,389,443,445,8080,8443,3389,5900]))
+            user = rng.choice(users)
+
+            if event_type == "failed_login":
+                status, severity = "failed", "low"
+            elif event_type == "successful_login":
+                status, severity = "success", "info"
+            elif event_type == "port_scan":
+                status, severity = "suspicious", "medium"
+                dest_port = int(rng.integers(1, 65535))
+            else:
+                status, severity = "suspicious", "high"
+
+            rows.append({
+                "timestamp": ts,
+                "src_ip": src_ip,
+                "dest_ip": dest_ip,
+                "dest_port": dest_port,
+                "username": user,
+                "event_type": event_type,
+                "status": status,
+                "severity": severity,
+            })
+
+    df = pd.DataFrame(rows)
+    if df.empty:
+        return df
+    return df.sort_values("timestamp").reset_index(drop=True)
+
+# =================== Generate Data ===================
+df = generate_demo_data(minutes=180, step_seconds=30, seed=42)
+
 
 
 # =================== LOAD DATA ===================
