@@ -49,15 +49,9 @@ Edit
 ## ⚡ Installation & Run Locally
 
  Clone the repo:
-   ```bash
+   ```bash 
    git clone https://github.com/selvina123/cyberpulse-dashboard.git
    cd cyberpulse-dashboard
-Create a virtual environment:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
 
 Install dependencies:
 pip install -r requirements.txt
