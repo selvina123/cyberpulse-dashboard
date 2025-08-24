@@ -198,7 +198,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # =================== Toggle between variations ===================
-st.markdown("### CyberPulse Dashboard")
+st.markdown("### 🔀 Dashboard Mode")
 mode_button = st.radio(
     "Select Variation", 
     ["Scenario 1: Brute Force Heavy", "Scenario 2: Port Scan Heavy"], 
@@ -229,9 +229,7 @@ def generate_demo_data(minutes:int=180, step_seconds:int=30, seed:int=42) -> pd.
     for ts in timestamps:
         num_events = rng.integers(0, 5)
         for _ in range(num_events):
-            # 👇 pick event type from scenario-defined EVENT_TYPES
-            event_type = rng.choice(EVENT_TYPES)
-
+            event_type = rng.choice(EVENT_TYPES)   # 👈 scenario-driven
             src_ip = rng.choice(offenders + public_pool + local_pool)
             dest_ip = rng.choice(servers)
             dest_port = int(rng.choice([22,23,25,80,110,135,139,389,443,445,8080,8443,3389,5900]))
@@ -265,6 +263,24 @@ def generate_demo_data(minutes:int=180, step_seconds:int=30, seed:int=42) -> pd.
 
 # =================== Generate Data ===================
 df = generate_demo_data(minutes=180, step_seconds=30, seed=42)
+
+# ✅ Add ip_risk column for map
+df["ip_risk"] = np.random.choice(["High", "Medium", "Low"], size=len(df), p=[0.2, 0.5, 0.3])
+
+# =================== Geo Risk Map ===================
+geo_df = (df.groupby("ip_risk")["src_ip"].count()
+            .reset_index(name="count")
+            .assign(
+                lat=lambda x: x["ip_risk"].map({"High": 51.5, "Medium": 48.8, "Low": 40.7}),
+                lon=lambda x: x["ip_risk"].map({"High": 0.1, "Medium": 2.3, "Low": -74.0})
+            ))
+
+fig_geo = px.scatter_geo(
+    geo_df, lat="lat", lon="lon", size="count", color="ip_risk",
+    projection="natural earth", title="IP Risk by Region"
+)
+fig_geo.update_layout(template="plotly_dark", margin=dict(l=10,r=10,t=50,b=10))
+st.plotly_chart(fig_geo, use_container_width=True, key="geo_map")
 
 
 
