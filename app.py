@@ -223,6 +223,8 @@ with c5:
 colA, colB = st.columns((2, 1))
 with colA:
     
+
+    
     pivot_evt = (df.pivot_table(index="event_type", columns="hour", values="src_ip", aggfunc="count")
                    .fillna(0)
                    .reindex(index=["failed_login","successful_login","port_scan","suspicious_login"], fill_value=0))
@@ -238,6 +240,8 @@ with colA:
 
 with colB:
     
+
+
     risk_to_geo = {
         "High": (51.5, 0.1),   # London
         "Medium": (48.8, 2.3), # Paris
