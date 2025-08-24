@@ -2,8 +2,8 @@
 
 A **Blue Team SOC Dashboard** built with [Streamlit](https://streamlit.io/) to simulate and visualize security events such as **failed logins, port scans, suspicious logins, brute-force attacks, and IP risk mapping**.
 
-🚀 Live Demo: [Streamlit Cloud Deployment](https://your-streamlit-app-link.streamlit.app)  
-*(replace with your deployed link)*
+🚀 Live Demo: 
+https://cyberpulse-dashboard-0711.streamlit.app/
 
 ---
 
@@ -58,12 +58,12 @@ Create a virtual environment:
 python3 -m venv venv
 source venv/bin/activate   # Mac/Linux
 venv\Scripts\activate      # Windows
+
 Install dependencies:
-
 pip install -r requirements.txt
+
 Run Streamlit app:
-
-
 streamlit run app.py
+
 Open in your browser:
 👉 http://localhost:8501
