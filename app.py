@@ -197,6 +197,21 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+# =================== Toggle between variations ===================
+st.markdown("### 🔀 Dashboard Mode")
+mode_button = st.radio(
+    "Select Variation", 
+    ["Scenario 1: Brute Force Heavy", "Scenario 2: Port Scan Heavy"], 
+    index=0
+)
+
+# Generate different demo data based on toggle
+if mode_button == "Scenario 1: Brute Force Heavy":
+    df = generate_demo_data(minutes=180, step_seconds=30, seed=42)  # normal distribution
+elif mode_button == "Scenario 2: Port Scan Heavy":
+    df = generate_demo_data(minutes=180, step_seconds=30, seed=99)  # different seed → different events
+
+
 # =================== LOAD DATA ===================
 if mode == "🧪 Demo Data":
     # generate synthetic demo logs
