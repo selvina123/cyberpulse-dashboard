@@ -3,6 +3,26 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+from ml.phishing import detect_phishing
+from ids_threatintel import generate_risk_report
+import pandas as pd
+
+email = "Dear user, your account will be suspended unless you click this link."
+print(detect_phishing(email))
+
+from ml.anomaly import detect_anomalies
+
+# After you load or simulate events (df, logs, etc.)
+events = df.to_dict("records")
+anomaly_scores = detect_anomalies(events)
+df["anomaly_score"] = anomaly_scores
+
+from ids_threatintel import enrich_ip
+
+df["threat_score"] = df["src_ip"].apply(lambda ip: enrich_ip(ip)["score"])
+df["country"] = df["src_ip"].apply(lambda ip: enrich_ip(ip)["country"])
+
+
 
 st.set_page_config(page_title="Blue Team SOC Dashboard", page_icon="🛡️", layout="wide")
 
@@ -224,7 +244,7 @@ colA, colB = st.columns((2, 1))
 with colA:
     
 
-    
+
     pivot_evt = (df.pivot_table(index="event_type", columns="hour", values="src_ip", aggfunc="count")
                    .fillna(0)
                    .reindex(index=["failed_login","successful_login","port_scan","suspicious_login"], fill_value=0))
@@ -288,5 +308,25 @@ with colD:
     fig_pie.update_traces(textinfo="label+percent")
     fig_pie.update_layout(template="plotly_dark", margin=dict(l=10, r=10, t=50, b=10), font=dict(color="#EAE6FF"))
     st.plotly_chart(fig_pie, use_container_width=True, key="event_type_pie")
+
+    st.markdown("### 📥 Export Risk Report")
+
+if st.button("Generate & Download CSV"):
+    # Generate report
+    report = generate_risk_report()
+    df_report = pd.DataFrame(report)
+
+    # Convert to CSV
+    csv = df_report.to_csv(index=False).encode("utf-8")
+
+    # Streamlit download button
+    st.download_button(
+        label="Download cyberpulse_risk_report.csv",
+        data=csv,
+        file_name="cyberpulse_risk_report.csv",
+        mime="text/csv"
+    )
+
+    st.success("✅ Risk Report generated!")
 
 
