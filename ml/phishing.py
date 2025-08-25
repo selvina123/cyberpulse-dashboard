@@ -1,6 +1,7 @@
 from transformers import pipeline
 
-nlp_model = pipeline("text-classification", model="mrm8488/bert-tiny-finetuned-phishing")
+# Use a spam detection model (public + stable)
+nlp_model = pipeline("text-classification", model="mrm8488/bert-tiny-finetuned-sms-spam-detection")
 
 def detect_phishing(email_text):
     result = nlp_model(email_text)[0]

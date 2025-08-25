@@ -1,0 +1,20 @@
+[
+  {
+    "timestamp": "2025-08-24T20:00:00Z",
+    "src_ip": "192.168.1.10",
+    "dest_ip": "10.0.0.5",
+    "event_type": "failed_login"
+  },
+  {
+    "timestamp": "2025-08-24T20:05:00Z",
+    "src_ip": "45.83.12.7",
+    "dest_ip": "10.0.0.10",
+    "event_type": "port_scan"
+  },
+  {
+    "timestamp": "2025-08-24T20:10:00Z",
+    "src_ip": "203.0.113.15",
+    "dest_ip": "10.0.0.12",
+    "event_type": "suspicious_login"
+  }
+]
