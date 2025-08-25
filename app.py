@@ -325,16 +325,19 @@ if st.button("Generate & Download CSV"):
 
     st.success("✅ Risk Report generated!")
 
-    from ml.phishing import detect_phishing
-
-st.markdown("### ✉️ Phishing Detector")
+   # ✉️ Phishing Detector Section
+# ---------------------------
+st.markdown("## ✉️ Phishing Detector")
 
 email_text = st.text_area("Paste email content here:")
+
 if st.button("Analyze Email"):
     if email_text.strip():
         result = detect_phishing(email_text)
-        st.write(f"**Prediction:** {result['label']} (score: {result['score']})")
+        if result['label'] == "spam":
+            st.error(f"⚠️ Suspicious Email Detected! Confidence: {result['score']}%")
+        else:
+            st.success(f"✅ Safe Email. Confidence: {result['score']}%")
     else:
         st.warning("Please paste some text first.")
-
 

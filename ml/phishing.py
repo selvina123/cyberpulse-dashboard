@@ -1,10 +1,14 @@
 from transformers import pipeline
 
-nlp_model = None
+nlp_model = pipeline("text-classification", model="mrm8488/bert-tiny-finetuned-sms-spam-detection")
+
+label_map = {
+    "LABEL_0": "ham",   # Safe
+    "LABEL_1": "spam"   # Phishing/Suspicious
+}
 
 def detect_phishing(email_text):
-    global nlp_model
-    if nlp_model is None:
-        nlp_model = pipeline("text-classification", model="mrm8488/bert-tiny-finetuned-sms-spam-detection")
     result = nlp_model(email_text)[0]
-    return {"label": result["label"], "score": round(result["score"], 3)}
+    label = label_map.get(result["label"], result["label"])
+    score = round(result["score"] * 100, 2)  # convert to % with 2 decimals
+    return {"label": label, "score": score}
