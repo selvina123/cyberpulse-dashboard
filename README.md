@@ -1,63 +1,38 @@
-# 🛡️ CyberPulse Dashboard
+🛡️ CyberPulse Dashboard
+An interactive cybersecurity dashboard that analyzes IDS logs, enriches them with threat intelligence, detects anomalies using machine learning, and flags phishing attempts with NLP-based classification. Deployed on Streamlit Cloud with Docker and CI/CD support.
 
-A **Blue Team SOC Dashboard** built with [Streamlit](https://streamlit.io/) to simulate and visualize security events such as **failed logins, port scans, suspicious logins, brute-force attacks, and IP risk mapping**.
+🚀 Features
 
-🚀 Live Demo: 
-https://cyberpulse-dashboard-0711.streamlit.app/
+IDS Log Monitoring → parses IDS logs (CSV/JSON) for suspicious events
+Threat Intelligence Enrichment → AbuseIPDB API lookups for IP reputation
+AI-Powered Anomaly Detection → Isolation Forest model for unusual activity
+Phishing Detection → HuggingFace Transformers for spam vs safe emails
+Risk Report Generator → produces actionable risk reports for quick insights
+Deployment Ready → Dockerfile & GitHub Actions for CI/CD
 
----
+🛠️ Tech Stack
 
-## ✨ Features
+Frontend / Visualization: Streamlit, Plotly
+Backend / Data Handling: Python, Pandas, NumPy, Requests
+Cybersecurity: IDS logs (Snort/Suricata), AbuseIPDB API
+Machine Learning: Scikit-learn (Isolation Forest), HuggingFace Transformers
+DevOps: Docker, GitHub Actions CI/CD
+Deployment: Streamlit Cloud
 
-- 📊 **Dashboard KPIs** — Critical, High, Low severity events, Total Events, Unique IPs  
-- 🔥 **Heatmap** — Event activity by hour and type  
-- 🌍 **IP Risk Geo Map** — Visualizes high, medium, and low risk IP addresses  
-- 📈 **Event Trends** — Events per minute with light purple neon theme  
-- 🍩 **Event Type Split** — Donut chart showing proportions of event categories  
-- ⚔️ **Attack Detection Rules**  
-  - Brute Force Detection (≥6 failed logins in 2 min)  
-  - Port Scan Detection (≥12 unique ports in 2 min)  
-  - Suspicious Login Detection  
+Clone the Repo
+git clone https://github.com/selvina123/cyberpulse-dashboard.git
+cd cyberpulse-dashboard
 
----
-
-## 🛠️ Tech Stack
-
-- **Python 3.9+**
-- [Streamlit](https://streamlit.io/)
-- [Plotly](https://plotly.com/python/)
-- [Pandas](https://pandas.pydata.org/)
-- [NumPy](https://numpy.org/)
-
----
-
-## 📂 Project Structure
-
-cyberpulse-dashboard/
-│── app.py # Main Streamlit app
-│── assets/
-│ └── styles.css # Custom neon CSS styles
-│── requirements.txt # Dependencies
-│── README.md # Project documentation
-
-yaml
-Copy
-Edit
-
----
-
-## ⚡ Installation & Run Locally
-
- Clone the repo:
-   ```bash 
-   git clone https://github.com/selvina123/cyberpulse-dashboard.git
-   cd cyberpulse-dashboard
-
-Install dependencies:
+Install Dependencies
 pip install -r requirements.txt
 
-Run Streamlit app:
+Run Locally
 streamlit run app.py
 
-Open in your browser:
-👉 http://localhost:8501
+Open in Browser
+App will be live at → http://localhost:8501
+
+🌐 Live Demo
+
+GitHub Repo: github.com/selvina123/cyberpulse-dashboard
+Live App: https://cyberpulse-dashboard-0115.streamlit.app/
