@@ -305,7 +305,7 @@ with colD:
     fig_pie.update_layout(template="plotly_dark", margin=dict(l=10, r=10, t=50, b=10), font=dict(color="#EAE6FF"))
     st.plotly_chart(fig_pie, use_container_width=True, key="event_type_pie")
 
-    st.markdown("### 📥 Export Risk Report")
+    
 
 if st.button("Generate & Download CSV"):
     # Generate report
