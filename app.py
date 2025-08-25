@@ -4,6 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from ml.phishing import detect_phishing
+from ml.anomaly import detect_anomalies
 from ids_threatintel import generate_risk_report
 import pandas as pd
 
@@ -207,8 +208,8 @@ if df.empty:
 # After you load or simulate events (df, logs, etc.)
 events = df.to_dict("records")
 if events:  # only run if df is not empty
-anomaly_scores = detect_anomalies(events)
-df["anomaly_score"] = anomaly_scores
+       anomaly_scores = detect_anomalies(events)
+       df["anomaly_score"] = anomaly_scores
 
 
 df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
