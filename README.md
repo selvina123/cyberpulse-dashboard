@@ -1,4 +1,5 @@
 🛡️ CyberPulse Dashboard
+
 An interactive cybersecurity dashboard that analyzes IDS logs, enriches them with threat intelligence, detects anomalies using machine learning, and flags phishing attempts with NLP-based classification. Deployed on Streamlit Cloud with Docker and CI/CD support.
 
 🚀 Features
