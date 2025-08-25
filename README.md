@@ -47,6 +47,6 @@ App will be live at → http://localhost:8501
 
 🌐 Live Demo
 
-GitHub Repo: github.com/selvina123/cyberpulse-dashboard
+GitHub Repo: https://github.com/selvina123/cyberpulse-dashboard
 
 Live App: https://cyberpulse-dashboard-0115.streamlit.app/
